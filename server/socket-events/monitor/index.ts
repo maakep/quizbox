@@ -1,9 +1,9 @@
 import { MONITOR } from "../../../common/socket-event-ids";
-import { Rooms, addRoom } from "../../server";
 import { generateId } from "../../util/generate";
 import { Question } from "../../../common/types";
+import { rooms, addRoom } from "../../room";
 
-const registerEventsForMonitor = (socket: SocketIO.Socket, rooms: Rooms) => {
+const registerEventsForMonitor = (socket: SocketIO.Socket) => {
     const monitor = (id: keyof typeof MONITOR | string, payload: any) => {
 
     }

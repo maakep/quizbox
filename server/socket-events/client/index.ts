@@ -1,8 +1,8 @@
 import { CLIENT } from "../../../common/socket-event-ids";
-import { Rooms } from "../../server";
 import { Client, FrontendClient } from "../../../common/types";
+import { rooms } from "../../room";
 
-const registerEventsForClient = (socket: SocketIO.Socket, rooms: Rooms) => {
+const registerEventsForClient = (socket: SocketIO.Socket) => {
     const client = (id: keyof typeof CLIENT | string, payload: any) => {
 
     }
@@ -16,7 +16,6 @@ const registerEventsForClient = (socket: SocketIO.Socket, rooms: Rooms) => {
         }
 
         rooms[client.room].clients.push(c);
-        socket.leave
         socket.join(client.room);
     });
 

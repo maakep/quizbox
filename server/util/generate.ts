@@ -1,4 +1,4 @@
-import { Rooms } from "../server";
+import { Rooms } from "../room";
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVXYZ0123456789';
 

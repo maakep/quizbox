@@ -8,5 +8,6 @@ export const MONITOR = {
     CREATE: 'CREATE',
 }
 export const SERVER = {
-    QUESTION: 'QUESTION'
+    QUESTION: 'QUESTION',
+    GENERATE: 'GENERATE',
 }

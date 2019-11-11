@@ -1,36 +1,31 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Game from './game';
-import { useState } from 'react';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import { ClientRoot } from './game/game-setup';
+import { ROUTES } from './routes';
+import { Create } from './monitor';
+import { Root } from './root';
 
 const Start = () => {
-    const [isDone, setIsDone] = useState<boolean>(false);
-    const [name, setName] = useState<string>(localStorage.getItem('previousName'));
-    const room = window.location.pathname.replace('/', '');
-
     return (
-        isDone
-            ? <Game name={name} room={room} />
-            : <>
-                Joining room {room}
-                <input
-                    type="text"
-                    autoFocus
-                    value={name}
-                    onKeyPress={e => {
-                        if (e.key === 'Enter') {
-                            localStorage.setItem('previousName', name)
-                            setIsDone(true)
-                        }
-                    }}
-                    onChange={e => setName(e.currentTarget.value)}
-                />
-            </>
-    )
-}
+        <BrowserRouter>
+            <Switch>
+                <Route path={ROUTES.MONITOR}>
+                    <Create />
+                </Route>
+                <Route path={ROUTES.SETUP}>
+                    <ClientRoot />
+                </Route>
+                <Route path={ROUTES.ROOT}>
+                    <Root />
+                </Route>
+            </Switch>
+        </BrowserRouter>
+    );
+};
 
 
 ReactDOM.render(
     <Start />,
     document.getElementById('root')
-)
+);

@@ -6,22 +6,26 @@ import { useState } from 'react';
 const Start = () => {
     const [isDone, setIsDone] = useState<boolean>(false);
     const [name, setName] = useState<string>(localStorage.getItem('previousName'));
+    const room = window.location.pathname.replace('/', '');
 
     return (
         isDone
-            ? <Game name={name} />
-            : <input
-                type="text"
-                autoFocus
-                value={name}
-                onKeyPress={e => {
-                    if (e.key === "Enter") {
-                        localStorage.setItem('previousName', name)
-                        setIsDone(true)
-                    }
-                }}
-                onChange={e => setName(e.currentTarget.value)}
-            />
+            ? <Game name={name} room={room} />
+            : <>
+                Joining room {room}
+                <input
+                    type="text"
+                    autoFocus
+                    value={name}
+                    onKeyPress={e => {
+                        if (e.key === 'Enter') {
+                            localStorage.setItem('previousName', name)
+                            setIsDone(true)
+                        }
+                    }}
+                    onChange={e => setName(e.currentTarget.value)}
+                />
+            </>
     )
 }
 

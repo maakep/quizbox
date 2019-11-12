@@ -19,7 +19,9 @@ export const Create = () => {
     socket.on(SERVER.GENERATE, (id: string) => {
         setId(id);
     });
-    socket.emit(MONITOR.CREATE, mockQuestions);
+
+    if (id === undefined)
+        socket.emit(MONITOR.CREATE, mockQuestions);
 
 
     return (

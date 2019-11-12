@@ -15,7 +15,11 @@ const registerEventsForClient = (socket: SocketIO.Socket) => {
             socket: socket,
         }
 
-        rooms[client.room].clients.push(c);
+        const existingUser = rooms[client.room].clients.find(u => u.name == c.name);
+
+        if (existingUser === undefined)
+            rooms[client.room].clients.push(c);
+
         socket.join(client.room);
     });
 

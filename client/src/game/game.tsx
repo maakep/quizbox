@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Socket from 'socket.io-client';
-import { CLIENT } from '../../../common/socket-event-ids';
+import { CLIENT } from '../../../common/events';
 import { FrontendClient } from '../../../common/types';
 
 type Props = {
@@ -23,10 +23,6 @@ export default (props: Props) => {
         room,
     }
     socket.emit(CLIENT.JOIN, client);
-
-    socket.on('message', (message: any) => {
-        console.log(message);
-    });
 
     return (
         <div>

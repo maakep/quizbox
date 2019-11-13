@@ -10,4 +10,6 @@ export const MONITOR = {
 export const SERVER = {
     QUESTION: 'QUESTION',
     GENERATE: 'GENERATE',
+    JOINED: 'JOINED',
+    LEFT: 'LEFT',
 }

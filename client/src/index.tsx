@@ -13,7 +13,7 @@ const Start = () => {
                 <Route path={ROUTES.MONITOR}>
                     <Create />
                 </Route>
-                <Route path={ROUTES.SETUP}>
+                <Route path={ROUTES.GAME}>
                     <ClientRoot />
                 </Route>
                 <Route path={ROUTES.ROOT}>

@@ -1,11 +1,8 @@
-import { CLIENT } from "../../../common/socket-event-ids";
+import { CLIENT, SERVER } from "../../../common/events";
 import { Client, FrontendClient } from "../../../common/types";
 import { rooms } from "../../room";
 
 const registerEventsForClient = (socket: SocketIO.Socket) => {
-    const client = (id: keyof typeof CLIENT | string, payload: any) => {
-
-    }
 
     socket.on(CLIENT.JOIN, (client: FrontendClient) => {
         const c: Client = {
@@ -14,13 +11,21 @@ const registerEventsForClient = (socket: SocketIO.Socket) => {
             score: 0,
             socket: socket,
         }
-
+        if (rooms[client.room] === undefined) {
+            // wrong code
+            return;
+        }
         const existingUser = rooms[client.room].clients.find(u => u.name == c.name);
 
         if (existingUser === undefined)
             rooms[client.room].clients.push(c);
 
         socket.join(client.room);
+        socket.to(client.room).emit(SERVER.JOINED, c.name);
+    });
+
+    socket.on("disconnect", (s: SocketIO.Socket) => {
+        socket.emit(SERVER.LEFT, s.id)
     });
 
 }

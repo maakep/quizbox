@@ -1,33 +1,53 @@
 import * as React from 'react';
 import { Question } from '../../../common/types';
 import * as Socket from 'socket.io-client';
-import { MONITOR, SERVER } from '../../../common/socket-event-ids';
-
-export const Create = () => {
-
-    const mockQuestions: Question[] = [
-        {
-            question: 'Best food?',
-            correct: 1,
-            incorrect: ['Taco', 'Pizza', 'Meatball', 'Falafel'],
-        },
-    ];
-
-    const [id, setId] = React.useState<string>(undefined);
-
-    const socket = Socket();
-    socket.on(SERVER.GENERATE, (id: string) => {
-        setId(id);
-    });
-
-    if (id === undefined)
-        socket.emit(MONITOR.CREATE, mockQuestions);
+import { MONITOR, SERVER } from '../../../common/events';
 
 
-    return (
-        id ? (
+const mockQuestions: Question[] = [
+    {
+        question: 'Best food?',
+        correct: 1,
+        incorrect: ['Taco', 'Pizza', 'Meatball', 'Falafel'],
+    }
+];
+
+type StateType = {
+    players: string[],
+    id: string,
+}
+export class Create extends React.PureComponent<{}, StateType> {
+    socket: SocketIOClient.Socket;
+
+
+    constructor(props: {}) {
+        super(props);
+
+        this.state = {
+            players: [],
+            id: undefined,
+        }
+
+        this.socket = Socket();
+
+        this.socket.on(SERVER.GENERATE, (id: string) => {
+            this.setState({ id });
+        });
+
+        this.socket.on(SERVER.JOINED, (name: string) => {
+            this.setState({ players: [...this.state.players, name] });
+        });
+
+        this.socket.emit(MONITOR.CREATE, mockQuestions);
+    }
+
+    render = () => (
+        this.state.id ? (
             <div>
-                {id}
+                {this.state.id}
+                <ul>
+                    {this.state.players.map((p) => <li key={p}>{p}</li>)}
+                </ul>
             </div>
         ) : (
                 <div>

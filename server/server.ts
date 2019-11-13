@@ -4,7 +4,6 @@ import * as path from 'path';
 import * as SocketIO from 'socket.io';
 import registerEventsForMonitor from './socket-events/monitor';
 import registerEventsForClient from './socket-events/client';
-import registerEventsForServer from './socket-events/server';
 
 const port = process.env.port || 8084;
 const root = { root: path.dirname("../") };
@@ -18,7 +17,6 @@ socket.on('connection', (socket) => {
 
     registerEventsForMonitor(socket);
     registerEventsForClient(socket)
-    registerEventsForServer(socket);
 
     console.log("Socket connected!");
 });
@@ -29,7 +27,7 @@ app.get('/', (req, res) => {
 app.get('/game/:room', (req, res) => {
     res.sendFile('index.html', root)
 });
-app.get('/monitor/(:room)?', (req, res) => {
+app.get('/monitor(/:room)?', (req, res) => {
     res.sendFile('index.html', root)
 });
 

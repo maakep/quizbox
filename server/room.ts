@@ -3,6 +3,7 @@ import { Client } from "../common/types";
 export type Room = {
     id: string,
     clients: Client[],
+    socket: SocketIO.Socket,
 }
 
 export type Rooms = {
@@ -11,13 +12,13 @@ export type Rooms = {
 
 export let rooms: Rooms = {};
 
-export const addRoom = (id: string) => {
+export const addRoom = (id: string, socket: SocketIO.Socket) => {
     rooms = {
         ...rooms,
         [id]: {
             id: id,
             clients: [],
+            socket: socket,
         }
     };
-    console.log(rooms);
 }

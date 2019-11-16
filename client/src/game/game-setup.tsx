@@ -1,12 +1,12 @@
 import * as React from 'react';
 import Game from './game';
 import { useState } from 'react';
+import { getRoomIdFromUrl } from '../../../server/util/generate';
 
 export const ClientRoot = () => {
     const [isDone, setIsDone] = useState<boolean>(false);
     const [name, setName] = useState<string>(localStorage.getItem('previousName'));
-    const room = window.location.pathname.split('/').pop();
-
+    const room = getRoomIdFromUrl();
     return (
         isDone
             ? <Game name={name} room={room} />

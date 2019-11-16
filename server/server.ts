@@ -4,16 +4,20 @@ import * as path from 'path';
 import * as SocketIO from 'socket.io';
 import registerEventsForMonitor from './socket-events/monitor';
 import registerEventsForClient from './socket-events/client';
+import { Question } from '../common/types';
+import { addRoom, rooms } from './room';
+import { generateId } from './util/generate';
 
 const port = process.env.port || 8084;
 const root = { root: path.dirname("../") };
 
 const app = express();
+app.use(express.json());
 const server = Http.createServer(app);
-const socket = SocketIO(server);
+const socketServer = SocketIO(server);
 
 
-socket.on('connection', (socket) => {
+socketServer.on('connection', (socket) => {
 
     registerEventsForMonitor(socket);
     registerEventsForClient(socket)
@@ -24,15 +28,32 @@ socket.on('connection', (socket) => {
 app.get('/', (req, res) => {
     res.sendFile('index.html', root)
 });
+
 app.get('/game/:room', (req, res) => {
-    res.sendFile('index.html', root)
+    if (rooms[req.params.room] === undefined) {
+        res.sendStatus(404);
+    } else {
+        res.sendFile('index.html', root)
+    }
 });
-app.get('/monitor(/:room)?', (req, res) => {
-    res.sendFile('index.html', root)
+app.get('/monitor/:room', (req, res) => {
+    if (rooms[req.params.room] === undefined) {
+        res.sendStatus(404);
+    } else {
+        res.sendFile('index.html', root)
+    }
 });
 
 app.get('/*.js', (req, res) => {
     res.sendFile(req.url, root);
+});
+
+app.post('/new-game', (req, res) => {
+    const questions: Question[] = req.body;
+    const id = generateId();
+    addRoom(id, questions);
+
+    res.status(200).send({ room: id });
 });
 
 
@@ -43,14 +64,6 @@ server.listen(port, () => {
 /*
 
 TODO:
-
-** Create mock json for questions
-
-** Monitor create game
-
-** Client join the created room (registerEventsForMonitor)
-
-Don't join same game multiple times, only rejoin.
 
 Monitor start game & game loop
 

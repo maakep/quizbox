@@ -1,31 +1,35 @@
 import { CLIENT, SERVER } from "../../../common/events";
-import { Client, FrontendClient } from "../../../common/types";
-import { rooms } from "../../room";
+import { Client } from "../../../common/types";
+import { rooms, joinRoom, leaveRoom } from "../../room";
 
 const registerEventsForClient = (socket: SocketIO.Socket) => {
 
-    socket.on(CLIENT.JOIN, (client: FrontendClient) => {
+    socket.on(CLIENT.JOIN, (client: Client) => {
         const c: Client = {
             name: client.name,
             room: client.room,
-            score: 0,
-            socket: socket,
+            score: client.score || 0,
+            id: socket.id,
         }
-        if (rooms[client.room] === undefined) {
+        if (rooms[c.room] === undefined) {
             // wrong code
             return;
         }
-        const existingUser = rooms[client.room].clients.find(u => u.name == c.name);
+        const existingUser = rooms[c.room].clients.find(u => u.id == c.id);
 
         if (existingUser === undefined)
-            rooms[client.room].clients.push(c);
+            joinRoom(c);
 
-        socket.join(client.room);
-        socket.to(client.room).emit(SERVER.JOINED, c.name);
+        socket.join(c.room);
+        socket.to(c.room).emit(SERVER.ROOM, rooms[c.room]);
     });
 
-    socket.on("disconnect", (s: SocketIO.Socket) => {
-        socket.emit(SERVER.LEFT, s.id)
+    socket.on("disconnect", () => {
+        const room = leaveRoom(socket.id);
+        if (room) {
+            socket.to(room.id).emit(SERVER.ROOM, room)
+
+        }
     });
 
 }

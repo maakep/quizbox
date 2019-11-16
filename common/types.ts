@@ -1,15 +1,12 @@
 export type Question = {
     question: string,
     correct: number,
-    incorrect: [string, string, string, string],
+    answers: [string, string, string, string],
 }
 
-export type FrontendClient = {
+export type Client = {
     name: string;
     room: string;
+    score?: number;
+    id?: string;
 };
-
-export type Client = FrontendClient & {
-    score: number;
-    socket: SocketIO.Socket;
-}

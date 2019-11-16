@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as Socket from 'socket.io-client';
 import { CLIENT } from '../../../common/events';
-import { FrontendClient } from '../../../common/types';
+import { Client } from '../../../common/types';
 
 type Props = {
     name: string;
@@ -18,7 +18,8 @@ type Question = {
 export default (props: Props) => {
     const socket = Socket();
     const { name, room } = props;
-    const client: FrontendClient = {
+
+    const client: Client = {
         name,
         room,
     }
@@ -26,7 +27,7 @@ export default (props: Props) => {
 
     return (
         <div>
-            tmp
+            You have joined the room: {room}
         </div>
     )
 }

@@ -9,7 +9,38 @@ const mockQuestions: Question[] = [
         question: 'Best food?',
         correct: 1,
         answers: ['Taco', 'Pizza', 'Meatball', 'Falafel'],
-    }
+    },
+    {
+        question: 'Best name?',
+        correct: 3,
+        answers: ['Fred', 'Freddie', 'Frederick', 'Fredrik'],
+    },
+    {
+        question: 'What\'s the capital of Sweden?',
+        correct: 0,
+        answers: ['Stockholm', 'Tokholm', 'Stackenholm', 'Göttlabörg'],
+    },
+    {
+        question: 'What does garlic taste like?',
+        correct: 1,
+        answers: ['Cheese', 'Garlic', 'Red', 'Grass'],
+    },
+    {
+        question: 'When are you most likely to get a heart attack?',
+        correct: 0,
+        answers: ['Monday', 'Tuesday', 'Friday', 'Saturday'],
+    },
+    {
+        question: 'What color was Napoleon\'s white horse?',
+        correct: 3,
+        answers: ['Transparent', 'Silver', 'Black', 'White'],
+    },
+    {
+        question: 'Finish the sentence: "Hello _____',
+        correct: 0,
+        answers: ['World', 'Hello', 'There', 'darkness my old friend'],
+    },
+
 ];
 
 export const Create = React.memo(() => {

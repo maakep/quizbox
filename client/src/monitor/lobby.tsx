@@ -32,19 +32,21 @@ export class Lobby extends React.PureComponent<{}, StateType> {
     }
 
     startGame = () => {
-
+        this.socket.emit(MONITOR.START, this.state.id);
     }
 
     render = () => (
         <div>
             Lobby for {this.state.id}
             {this.state.room &&
-                <ul>
-                    {this.state.room.clients.map((p) => <li key={p.id}>{p.name}</li>)}
-                </ul>
+                <>
+                    <ul>
+                        {this.state.room.clients.map((p) => <li key={p.id}>{p.name}</li>)}
+                    </ul>
+                    <button onClick={this.startGame}>Start game</button>
+                </>
             }
 
-            <button onClick={this.startGame}>Start game</button>
         </div>
     );
 }

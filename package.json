@@ -7,7 +7,7 @@
     "build": "webpack",
     "watch": "webpack --watch",
     "start": "ts-node server/server.ts",
-    "format": "prettier client/**/*"
+    "format": "prettier --write client/src/**/* && prettier --write server/**/* && prettier --write common/**/*"
   },
   "author": "",
   "license": "ISC",

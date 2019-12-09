@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",
-    "start": "ts-node server/server.ts"
+    "start": "ts-node server/server.ts",
+    "format": "prettier client/**/*"
   },
   "author": "",
   "license": "ISC",
@@ -16,6 +17,7 @@
     "@types/react-router-dom": "^5.1.2",
     "@types/socket.io": "^2.1.4",
     "@types/socket.io-client": "^1.4.32",
+    "prettier": "^1.19.1",
     "source-map": "^0.7.3",
     "source-map-loader": "^0.2.4",
     "ts-loader": "^6.2.1",

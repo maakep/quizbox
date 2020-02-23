@@ -1,4 +1,4 @@
-import { Client, Question } from "../common/types";
+import { Client, Question } from '../common/types';
 
 export type Room = {
   id: string;
@@ -18,8 +18,8 @@ export const addRoom = (id: string, questions: Question[]) => {
     [id]: {
       id: id,
       clients: [],
-      questions: questions
-    }
+      questions: questions,
+    },
   };
 };
 
@@ -36,4 +36,20 @@ export const leaveRoom = (sId: string): Room => {
       return rooms[room];
     }
   }
+};
+
+export const answer = (client: Client, answerId: number): boolean => {
+  const room = rooms[client.room];
+  const answersLength = room.questions[0].clientAnswers.push({
+    client: client,
+    answerId: answerId,
+    roomId: client.room,
+  });
+
+  console.log('Answers length', answersLength);
+  const answersLeft = room.clients.length - answersLength;
+  console.log('Answers left', answersLeft);
+
+  const isFinalAnswer = answersLeft === 0;
+  return isFinalAnswer;
 };

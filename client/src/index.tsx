@@ -1,11 +1,12 @@
-import * as React from "react";
-import * as ReactDOM from "react-dom";
-import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
-import { ClientRoot } from "./game/game-setup";
-import { ROUTES } from "./routes";
-import { Create } from "./monitor";
-import { Root } from "./root";
-import { Lobby } from "./monitor/lobby";
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+import { ClientRoot } from './game/game-setup';
+import { ROUTES } from './routes';
+import { Create } from './monitor';
+import { Root } from './root';
+import { Lobby } from './monitor/lobby';
+import { Results } from './game/results';
 
 const Start = () => {
   return (
@@ -17,16 +18,19 @@ const Start = () => {
         <Route exact path={ROUTES.GAME}>
           <ClientRoot />
         </Route>
+        <Route exact path={ROUTES.RESULTS}>
+          <Results />
+        </Route>
         <Route exact path={ROUTES.ROOT}>
           <Root />
         </Route>
         <Route exact path={ROUTES.MONITOR_GAME}>
           <Lobby />
         </Route>
-        <Route path={"*"}>404</Route>
+        <Route path={'*'}>404</Route>
       </Switch>
     </BrowserRouter>
   );
 };
 
-ReactDOM.render(<Start />, document.getElementById("root"));
+ReactDOM.render(<Start />, document.getElementById('root'));
